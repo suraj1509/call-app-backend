@@ -1,0 +1,15 @@
+module.exports.authService = require('./auth.service');
+module.exports.emailService = require('./email.service');
+module.exports.tokenService = require('./token.service');
+module.exports.userService = require('./user.service');
+// module.exports.likedUserService = require('./likedUser.service');
+// module.exports.rejectedUserService = require('./rejectedUser.service');
+// module.exports.matchedUserService = require('./matchedUser.service');
+// module.exports.savedUserService = require('./savedUser.service');
+// module.exports.blockedUserService = require('./blockedUser.service');
+// module.exports.visitedUserService = require('./visitedUser.service');
+// module.exports.messageService = require('./message.service');
+// module.exports.chatService = require('./chat.service');
+// module.exports.storyService = require('./story.service');
+module.exports.fcmService = require('./fcm.service');
+module.exports.socialConnectService = require('./socialConnect.service');
