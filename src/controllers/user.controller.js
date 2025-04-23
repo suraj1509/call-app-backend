@@ -281,6 +281,7 @@ const updateMe = catchAsync(async (req, res) => {
       id: req.user.id,
       isOnboardingCompleted: req.body.onboardingStage >= 2,
       onboardingStage: req.body.onboardingStage,
+      role: req.body.role,
     });
   }
   if (req.body.onboardingStage >= 2) {

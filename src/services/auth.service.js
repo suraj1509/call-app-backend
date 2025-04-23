@@ -82,7 +82,7 @@ const loginOrRegisterWithGoogle = async (decodedUser, googleData) => {
     user = await userService.updateUserById(decodedUser?.id, {
       lastActive: new Date(),
     });
-    onBoardingStage = user.onboardingStage || 1;
+    onBoardingStage = 2;
   }
   return { user, onBoardingStage };
 };

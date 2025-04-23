@@ -55,7 +55,7 @@ const userSchema = mongoose.Schema(
       type: String,
 
     },
-    referalCode: {
+    referralCode: {
       type: String,
     },
     phoneNumber: {
@@ -185,8 +185,8 @@ const userSchema = mongoose.Schema(
       type: String,
  
     },
-    profilePhoto: {
-      type:String
+    profilePhotos: {
+      type: Array
     },
      wallet: {
       type:Number,

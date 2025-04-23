@@ -40,7 +40,7 @@ const verify = catchAsync(async (req, res) => {
     user = await userService.updateUserById(decodedUser?.id, {
       lastActive: new Date(),
     });
-    onBoardingStage = user.onboardingStage;
+    onBoardingStage = 2;
   }
 
   res.status(httpStatus.OK).send({ user, onBoardingStage });

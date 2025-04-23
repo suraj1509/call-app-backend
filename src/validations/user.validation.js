@@ -81,15 +81,16 @@ const updateMe = {
       languagesSpoken: Joi.array(),
       permanentAddress: Joi.string(),
       language: Joi.string(),
-      referalCode:Joi.string(),
+      referralCode: Joi.optional(),
       currentAddress: Joi.string(),
       originalAddress: Joi.string(),
-      profilePhoto: Joi.string(),
+      profilePhotos: Joi.array(),
       onboardingStage: Joi.number().min(1).max(9),
       isOnboardingCompleted: Joi.boolean().optional(),
       phoneNumber: Joi.optional(),
       about: Joi.string().optional(),
       role: Joi.string().optional(),
+      rate: Joi.number().optional(),
     })
     .min(1),
 };

@@ -61,12 +61,7 @@ const queryFeedUsers = async (filter, options) => {
  * @returns {Promise<User>}
  */
 const getUserById = async (id) => {
-  let user = await Employer.findById(id);
-  
-  if (!user) {
-    user = await User.findById(id);
-  }
-
+  let user = await User.findById(id);
   return user;
 };
 
@@ -151,26 +146,9 @@ const getUsersByName = async (name, userId) => {
  */
 const updateUserById = async (userId, updateBody) => {
   
-  let user = await User.findById(userId); // <-- await is required
-
-
-  if (!user) {
-   user = await Employer.findById(userId);
-  }
-
+  let user = await User.findById(userId); 
   Object.assign(user, updateBody);
   await user.save();
-
-  if (updateBody.role === 'Employer') {
-    const employerData = {
-      ...user.toObject(),  // Get plain user object
-      ...updateBody,       // Overwrite with updated fields
-    };
-
-    await Employer.create(employerData); // Create in Employer model
-    await User.deleteOne({ _id: userId }); // Delete from User model
-  }
-
   return user;
 };
 
@@ -191,19 +169,20 @@ const deleteUserById = async (userId) => {
 
 const getFeedUsers = async (role) => {
   try {
-    if (role === 'user') {
-      // Fetch from User collection
-      const users = await User.find();
+    if (role === 'User' || role === 'user') {
+      const employees = await User.find({ role: 'Employee' });
+      return employees;
+    } else if (role === 'Employee' || role === 'employee') {
+      const users = await User.find({ role: 'User' });
       return users;
     } else {
-      // Fetch from Employer collection
-      const employers = await Employer.find();
-      return employers;
+      throw new Error('Invalid role provided');
     }
   } catch (error) {
     throw new Error('Failed to fetch users: ' + error.message);
   }
 };
+
 
 module.exports = {
   createUser,
