@@ -91,6 +91,13 @@ const updateMe = {
       about: Joi.string().optional(),
       role: Joi.string().optional(),
       rate: Joi.number().optional(),
+      vacationMode: Joi.boolean().optional(),
+      notificationMode: Joi.boolean().optional(),
+      state: Joi.string().optional(),
+      timeSlots: Joi.array().optional(),
+      history: Joi.array(),
+      reviews: Joi.array(),
+      reviewed: Joi.array(),
     })
     .min(1),
 };

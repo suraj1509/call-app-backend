@@ -51,10 +51,6 @@ const userSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    language: {
-      type: String,
-
-    },
     referralCode: {
       type: String,
     },
@@ -177,10 +173,14 @@ const userSchema = mongoose.Schema(
     //   ],
     //   default: [],
     // },
-    // languagesSpoken: {
-    //   type: [String],
-    //   default: [],
-    // },
+    languagesSpoken: {
+      type: [String],
+      default: [],
+    },
+    timeSlots:{
+      type : [String],
+      default: []
+    },
       language: {
       type: String,
  
@@ -199,9 +199,39 @@ const userSchema = mongoose.Schema(
           duration: { type: String, required: true },
           type: { type: String, required: true },
           cost: { type: Number, required: true },
+          time: { type: Date, default: Date.now },
         }
       ],
       default: [],
+    },
+      reviews: {
+      type: [
+        {
+          id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+          name: { type: String, required: true },
+          rating: { type: Number, required: true },
+          comment: { type: String,},
+          img: { type: String, required: true },
+          time: { type: Date, default: Date.now },
+        }
+      ],
+      default: [],
+    },
+    reviewed: {
+      type: [mongoose.Schema.Types.ObjectId], 
+      ref: 'User',              
+      default: [],
+    },
+    vacationMode: {
+      type: Boolean,
+      default: false,
+    },
+    notificationMode: {
+      type: Boolean,
+      default: false,
+    },
+    state : {
+      type : String,
     },
     rate:{
       type : Number,

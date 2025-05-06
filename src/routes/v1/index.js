@@ -12,6 +12,7 @@ const userRoute = require('./user.route');
 const SocialConnect = require('./socialConnect.route');
 const Fcm = require('./fcm.route');
 const docsRoute = require('./docs.route');
+const FeedUser = require('./feedUser.route');
 const config = require('../../config/config');
 
 const router = express.Router();
@@ -28,9 +29,14 @@ const defaultRoutes = [
   {
     path: '/fcm',
     route: Fcm,
-  },{
+  },
+  {
     path: '/socialConnect',
     route: SocialConnect,
+  },
+  {
+    path: '/feedUser',
+    route: FeedUser,
   },
 ];
 

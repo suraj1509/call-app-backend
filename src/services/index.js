@@ -13,3 +13,4 @@ module.exports.userService = require('./user.service');
 // module.exports.storyService = require('./story.service');
 module.exports.fcmService = require('./fcm.service');
 module.exports.socialConnectService = require('./socialConnect.service');
+module.exports.feedUserService = require('./feedUser.service');

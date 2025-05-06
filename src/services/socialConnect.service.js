@@ -10,10 +10,12 @@ const APP_ID = config.agora.appId
 const APP_CERTIFICATE = config.agora.appCertificate;
 const TOKEN_EXPIRATION = config.agora.tokenExpiration; 
 
-const createConnect = async ({channelName, mode, uid, callerUid, callerName}) => {
+const createConnect = async ({channelName, mode, uid, id, callerName, img, }) => {
   try {
     if (!mode) throw new ApiError(httpStatus.BAD_REQUEST, "Mode is required");
-
+    if (!img){
+      img = "https://pixabay.com/vectors/man-silhouette-person-avatar-146638/"
+    }
     const currentTimestamp = Math.floor(Date.now() / 1000);
     const privilegeExpiredTs = currentTimestamp + TOKEN_EXPIRATION;
     const token = await RtcTokenBuilder.buildTokenWithUid(
@@ -27,10 +29,11 @@ const createConnect = async ({channelName, mode, uid, callerUid, callerName}) =>
     await db.ref(`connect/${uid}`).set({
       mode,         
       channelName,  
-      callerUid,          
+      id,          
       token,
       callerName,        
       createdAt: Date.now(),
+      img
     });
 
     return token;
