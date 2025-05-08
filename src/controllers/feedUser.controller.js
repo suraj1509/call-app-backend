@@ -8,4 +8,19 @@ const createReview = catchAsync(async (req, res) => {
     const response = await feedUserService.createReview(userId, newData);
     res.status(httpStatus.CREATED).send(response);
 });
-module.exports = { createReview};
+
+const blockUser = catchAsync(async (req, res) => {
+    const { userId } = req.params;
+    const id =  req.user.id
+    const response = await feedUserService.blockUser(userId, id);
+    res.status(httpStatus.CREATED).send(response);
+});
+
+const reportUser = catchAsync(async (req, res) => {
+    const { userId } = req.params;
+    const id =  req.user.id
+    const response = await feedUserService.reportUser(userId, id);
+    res.status(httpStatus.CREATED).send(response);
+});
+
+module.exports = { createReview, blockUser, reportUser};

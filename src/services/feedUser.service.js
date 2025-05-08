@@ -33,6 +33,53 @@ const createReview = async (targetUserId, newReview) => {
     return user.reviews;
 };
 
+const blockUser = async (targetUserId, targetedUserId) => {
+  console.log('targetUserId', targetUserId);
+  const targetUser = await User.findById(targetUserId);
+  if (!targetUser) throw new Error('Target user not found');
+
+  const targetedUser = await User.findById(targetedUserId);
+  if (!targetedUser) throw new Error('Targeted user not found');
+
+  // Initialize blockedUsers if it doesn't exist
+  if (!Array.isArray(targetedUser.blockedUsers)) {
+    targetedUser.blockedUsers = [];
+  }
+
+  // Add only if not already blocked
+  if (!targetedUser.blockedUsers.includes(targetUserId)) {
+    targetedUser.blockedUsers.push(targetUserId);
+    await targetedUser.save();
+  }
+
+  return targetedUser.blockedUsers;
+};
+
+
+const reportUser = async (targetUserId, targettedUserId) => {
+  const targetUser = await User.findById(targetUserId);
+  if (!targetUser) throw new Error('Target user not found');
+
+  const reportingUser = await User.findById(targettedUserId);
+  if (!reportingUser) throw new Error('Reporting user not found');
+
+  // Initialize reportedUsers if it doesn't exist
+  if (!Array.isArray(reportingUser.reportedUsers)) {
+    reportingUser.reportedUsers = [];
+  }
+
+  // Add only if not already reported
+  if (!reportingUser.reportedUsers.includes(targetUserId)) {
+    reportingUser.reportedUsers.push(targetUserId);
+    await reportingUser.save();
+  }
+
+  return reportingUser.reportedUsers;
+};
+
+
 module.exports = {
   createReview,
+  blockUser,
+  reportUser
 };

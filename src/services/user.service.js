@@ -61,7 +61,7 @@ const queryFeedUsers = async (filter, options) => {
  * @returns {Promise<User>}
  */
 const getUserById = async (id) => {
-  let user = await User.findById(id);
+  let user = await User.findById(id).populate('blockedUsers');
   return user;
 };
 
@@ -90,53 +90,54 @@ const getUserByPhone = async (countryCode, phoneNumber) => {
  * @returns {Promise<User>}
  */
 const getUsersByName = async (name, userId) => {
-  const users = await User.aggregate([
-    {
-      $match: { name: { $regex: name, $options: 'i' }, _id: { $ne: mongoose.Types.ObjectId(userId) } },
-    },
-    {
-      $project: {
-        _id: 1,
-        dob: 1,
-        name: 1,
-        about: 1,
-        uid: 1,
-        currentPlace: 1,
-        permanentAddress: 1,
-        interests: 1,
-        languagesSpoken: 1,
-        age: {
-          $let: {
-            vars: {
-              age: {
-                $divide: [{ $subtract: [{ $toLong: new Date() }, { $toLong: '$dob' }] }, 31536000000],
-              },
-            },
-            in: { $floor: '$$age' },
-          },
-        },
-        profilePhoto: {
-          $arrayElemAt: [
-            {
-              $filter: {
-                input: '$profilePhotos',
-                as: 'photo',
-                cond: { $eq: ['$$photo.isProfilePhoto', true] },
-              },
-            },
-            0,
-          ],
-        },
-      },
-    },
-    {
-      $addFields: {
-        profilePhoto: { $ifNull: ['$profilePhoto.url', null] },
-      },
-    },
-  ]);
-  return users.length > 0 ? users : [];
+  const currentUser = await User.findById(userId).select('role blockedUsers reportedUsers');
+  if (!currentUser) throw new Error('User not found');
+
+  const targetRole = currentUser.role === 'User' ? 'Employee' : 'User';
+
+  const users = await User.find({
+    name: { $regex: name, $options: 'i' },
+    _id: { $ne: userId },
+    role: targetRole,
+  }).select(
+    '_id dob name about uid currentPlace permanentAddress interests languagesSpoken profilePhotos'
+  );
+
+  const blockedIds = new Set((currentUser.blockedUsers || []).map(id => id.toString()));
+  const reportedIds = new Set((currentUser.reportedUsers || []).map(id => id.toString()));
+
+  const filteredUsers = users.filter(user => {
+    const idStr = user._id.toString();
+    return !blockedIds.has(idStr) && !reportedIds.has(idStr);
+  });
+
+  const formattedUsers = filteredUsers.map((user) => {
+    const profilePhotoObj = user.profilePhotos?.find((p) => p.isProfilePhoto);
+    const profilePhoto = profilePhotoObj ? profilePhotoObj.url : null;
+
+    const age = user.dob
+      ? Math.floor((Date.now() - new Date(user.dob).getTime()) / 31536000000)
+      : null;
+
+    return {
+      _id: user._id,
+      name: user.name,
+      dob: user.dob,
+      about: user.about,
+      uid: user.uid,
+      currentPlace: user.currentPlace,
+      permanentAddress: user.permanentAddress,
+      interests: user.interests,
+      languagesSpoken: user.languagesSpoken,
+      profilePhoto,
+      age,
+    };
+  });
+
+  return formattedUsers;
 };
+
+
 
 /**
  * Update user by id
@@ -145,12 +146,14 @@ const getUsersByName = async (name, userId) => {
  * @returns {Promise<User>}
  */
 const updateUserById = async (userId, updateBody) => {
-  
-  let user = await User.findById(userId); 
+  let user = await User.findById(userId);
   Object.assign(user, updateBody);
+  user.lastActive = Date.now();
+
   await user.save();
   return user;
 };
+
 
 
 /**

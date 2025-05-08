@@ -222,6 +222,16 @@ const userSchema = mongoose.Schema(
       ref: 'User',              
       default: [],
     },
+    blockedUsers: {
+      type: [mongoose.Schema.Types.ObjectId], 
+      ref: 'User',              
+      default: [],
+    },
+    reportedUsers: {
+      type: [mongoose.Schema.Types.ObjectId], 
+      ref: 'User',              
+      default: [],
+    },
     vacationMode: {
       type: Boolean,
       default: false,
@@ -332,10 +342,10 @@ const userSchema = mongoose.Schema(
       //     type: Date,
       //   },
     // },
-    // lastActive: {
-    //   type: Date,
-    //   default: Date.now,
-    // },
+    lastActive: {
+      type: Date,
+      default: Date.now,
+    },
     // chatRooms: [
     //   {
     //     type: mongoose.Schema.Types.ObjectId,

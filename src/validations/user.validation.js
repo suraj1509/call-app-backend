@@ -98,6 +98,8 @@ const updateMe = {
       history: Joi.array(),
       reviews: Joi.array(),
       reviewed: Joi.array(),
+      blockedUsers: Joi.array(),
+      reportedUsers: Joi.array(),
     })
     .min(1),
 };
