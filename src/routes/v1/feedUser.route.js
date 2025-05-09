@@ -9,6 +9,7 @@ router
   .post(auth('manageUsers'), feedUserController.createReview)
   
 router.route('/block/:userId').post(auth('manageUsers'), feedUserController.blockUser)
+router.route('/unblock/:userId').post(auth('manageUsers'), feedUserController.unBlockUser)
 router.route('/report/:userId').post(auth('manageUsers'), feedUserController.reportUser)
 
 module.exports = router;

@@ -34,7 +34,6 @@ const createReview = async (targetUserId, newReview) => {
 };
 
 const blockUser = async (targetUserId, targetedUserId) => {
-  console.log('targetUserId', targetUserId);
   const targetUser = await User.findById(targetUserId);
   if (!targetUser) throw new Error('Target user not found');
 
@@ -56,6 +55,29 @@ const blockUser = async (targetUserId, targetedUserId) => {
 };
 
 
+const unBlockUser = async (targetUserId, targetedUserId) => {
+  const targetUser = await User.findById(targetUserId);
+  if (!targetUser) throw new Error('Target user not found');
+
+  const targetedUser = await User.findById(targetedUserId);
+  if (!targetedUser) throw new Error('Targeted user not found');
+
+  // Ensure blockedUsers is an array
+  if (!Array.isArray(targetedUser.blockedUsers)) {
+    targetedUser.blockedUsers = [];
+  }
+
+  // Remove targetUserId from blockedUsers if present
+  const index = targetedUser.blockedUsers.indexOf(targetUserId);
+  if (index !== -1) {
+    targetedUser.blockedUsers.splice(index, 1);
+    await targetedUser.save();
+  }
+
+  return targetedUser.blockedUsers;
+};
+
+
 const reportUser = async (targetUserId, targettedUserId) => {
   const targetUser = await User.findById(targetUserId);
   if (!targetUser) throw new Error('Target user not found');
@@ -63,7 +85,6 @@ const reportUser = async (targetUserId, targettedUserId) => {
   const reportingUser = await User.findById(targettedUserId);
   if (!reportingUser) throw new Error('Reporting user not found');
 
-  // Initialize reportedUsers if it doesn't exist
   if (!Array.isArray(reportingUser.reportedUsers)) {
     reportingUser.reportedUsers = [];
   }
@@ -81,5 +102,6 @@ const reportUser = async (targetUserId, targettedUserId) => {
 module.exports = {
   createReview,
   blockUser,
-  reportUser
+  reportUser,
+  unBlockUser
 };

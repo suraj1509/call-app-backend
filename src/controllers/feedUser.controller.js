@@ -16,6 +16,13 @@ const blockUser = catchAsync(async (req, res) => {
     res.status(httpStatus.CREATED).send(response);
 });
 
+const unBlockUser = catchAsync(async (req, res) => {
+    const { userId } = req.params;
+    const id =  req.user.id
+    const response = await feedUserService.unBlockUser(userId, id);
+    res.status(httpStatus.CREATED).send(response);
+});
+
 const reportUser = catchAsync(async (req, res) => {
     const { userId } = req.params;
     const id =  req.user.id
@@ -23,4 +30,4 @@ const reportUser = catchAsync(async (req, res) => {
     res.status(httpStatus.CREATED).send(response);
 });
 
-module.exports = { createReview, blockUser, reportUser};
+module.exports = { createReview, blockUser, reportUser, unBlockUser};
