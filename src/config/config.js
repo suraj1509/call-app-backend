@@ -29,6 +29,8 @@ const envVarsSchema = Joi.object()
     APP_ID:Joi.string().required().description('agora app id'),
     APP_CERTIFICATE:Joi.string().required().description('agora app certificate'),
     TOKEN_EXPIRATION:Joi.number().required().description('agora token expiration'),
+    RAZORPAY_KEY_ID:Joi.string().required().description('razorpay key id'),
+    RAZORPAY_KEY_SECRET:Joi.string().required().description('razorpay key secret'),
   })
   .unknown();
 
@@ -76,5 +78,9 @@ module.exports = {
     appId: envVars.APP_ID,
     appCertificate: envVars.APP_CERTIFICATE,
     tokenExpiration: envVars.TOKEN_EXPIRATION,
+  },
+   razorpay: {
+    keyId: envVars.RAZORPAY_KEY_ID,
+    keySecret: envVars.RAZORPAY_KEY_SECRET,
   },
 };

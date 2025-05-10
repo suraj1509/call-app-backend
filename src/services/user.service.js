@@ -61,7 +61,7 @@ const queryFeedUsers = async (filter, options) => {
  * @returns {Promise<User>}
  */
 const getUserById = async (id) => {
-  let user = await User.findById(id).populate('blockedUsers');
+  let user = await User.findById(id).populate('blockedUsers').populate('orders') ;
   return user;
 };
 

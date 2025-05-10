@@ -11,6 +11,8 @@ router
 router.route('/block/:userId').post(auth('manageUsers'), feedUserController.blockUser)
 router.route('/unblock/:userId').post(auth('manageUsers'), feedUserController.unBlockUser)
 router.route('/report/:userId').post(auth('manageUsers'), feedUserController.reportUser)
+router.route('/save/:userId').post(auth('manageUsers'), feedUserController.saveUser)
+router.route('/unsave/:userId').post(auth('manageUsers'), feedUserController.unSaveUser)
 
 module.exports = router;
 

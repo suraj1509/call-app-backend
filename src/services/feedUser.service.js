@@ -98,10 +98,55 @@ const reportUser = async (targetUserId, targettedUserId) => {
   return reportingUser.reportedUsers;
 };
 
+const saveUser = async (targetUserId, targettedUserId) => {
+  const targetUser = await User.findById(targetUserId);
+  if (!targetUser) throw new Error('Target user not found');
+
+  const targetedUser = await User.findById(targettedUserId);
+  if (!targetedUser) throw new Error('Targeted user not found');
+
+  // Initialize blockedUsers if it doesn't exist
+  if (!Array.isArray(targetedUser.savedUsers)) {
+    targetedUser.savedUsers = [];
+  }
+
+  // Add only if not already blocked
+  if (!targetedUser.savedUsers.includes(targetUserId)) {
+    targetedUser.savedUsers.push(targetUserId);
+    await targetedUser.save();
+  }
+
+  return targetedUser.savedUsers;
+};
+
+const unSaveUser = async (targetUserId, targettedUserId) => {
+  const targetUser = await User.findById(targetUserId);
+  if (!targetUser) throw new Error('Target user not found');
+
+  const targetedUser = await User.findById(targettedUserId);
+  if (!targetedUser) throw new Error('Targeted user not found');
+
+  // Ensure blockedUsers is an array
+  if (!Array.isArray(targetedUser.savedUsers)) {
+    targetedUser.savedUsers = [];
+  }
+
+  // Remove targetUserId from blockedUsers if present
+  const index = targetedUser.savedUsers.indexOf(targetUserId);
+  if (index !== -1) {
+    targetedUser.savedUsers.splice(index, 1);
+    await targetedUser.save();
+  }
+
+  return targetedUser.savedUsers;
+};
+
 
 module.exports = {
   createReview,
   blockUser,
   reportUser,
-  unBlockUser
+  unBlockUser,
+  unSaveUser,
+  saveUser
 };

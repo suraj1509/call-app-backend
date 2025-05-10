@@ -23,6 +23,20 @@ const unBlockUser = catchAsync(async (req, res) => {
     res.status(httpStatus.CREATED).send(response);
 });
 
+const saveUser = catchAsync(async (req, res) => {
+    const { userId } = req.params;
+    const id =  req.user.id
+    const response = await feedUserService.saveUser(userId, id);
+    res.status(httpStatus.CREATED).send(response);
+});
+
+const unSaveUser = catchAsync(async (req, res) => {
+    const { userId } = req.params;
+    const id =  req.user.id
+    const response = await feedUserService.unSaveUser(userId, id);
+    res.status(httpStatus.CREATED).send(response);
+});
+
 const reportUser = catchAsync(async (req, res) => {
     const { userId } = req.params;
     const id =  req.user.id
@@ -30,4 +44,4 @@ const reportUser = catchAsync(async (req, res) => {
     res.status(httpStatus.CREATED).send(response);
 });
 
-module.exports = { createReview, blockUser, reportUser, unBlockUser};
+module.exports = { createReview, blockUser, reportUser, unBlockUser, unSaveUser, saveUser};

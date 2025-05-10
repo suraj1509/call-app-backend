@@ -13,6 +13,7 @@ const SocialConnect = require('./socialConnect.route');
 const Fcm = require('./fcm.route');
 const docsRoute = require('./docs.route');
 const FeedUser = require('./feedUser.route');
+const Payment = require('./payment.route');
 const config = require('../../config/config');
 
 const router = express.Router();
@@ -37,6 +38,10 @@ const defaultRoutes = [
   {
     path: '/feedUser',
     route: FeedUser,
+  },
+  {
+    path: '/payment',
+    route: Payment,
   },
 ];
 

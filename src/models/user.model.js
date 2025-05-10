@@ -177,6 +177,12 @@ const userSchema = mongoose.Schema(
       type: [String],
       default: [],
     },
+    orders: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Order',
+      }
+    ],    
     timeSlots:{
       type : [String],
       default: []
