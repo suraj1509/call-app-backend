@@ -98,48 +98,38 @@ const reportUser = async (targetUserId, targettedUserId) => {
   return reportingUser.reportedUsers;
 };
 
-const saveUser = async (targetUserId, targettedUserId) => {
-  const targetUser = await User.findById(targetUserId);
-  if (!targetUser) throw new Error('Target user not found');
+const saveUser = async (userId, id) => {
+  const targetUser = await User.findById(id);
+  if (!targetUser) throw new Error('Target user not found')
 
-  const targetedUser = await User.findById(targettedUserId);
-  if (!targetedUser) throw new Error('Targeted user not found');
-
-  // Initialize blockedUsers if it doesn't exist
-  if (!Array.isArray(targetedUser.savedUsers)) {
-    targetedUser.savedUsers = [];
+  if (!Array.isArray(targetUser.savedUsers)) {
+    targetUser.savedUsers = [];
   }
 
-  // Add only if not already blocked
-  if (!targetedUser.savedUsers.includes(targetUserId)) {
-    targetedUser.savedUsers.push(targetUserId);
-    await targetedUser.save();
+  if (!targetUser.savedUsers.includes(userId)) {
+    targetUser.savedUsers.push(userId);
+    await targetUser.save();
   }
-
-  return targetedUser.savedUsers;
+  return targetUser.savedUsers;
 };
 
-const unSaveUser = async (targetUserId, targettedUserId) => {
-  const targetUser = await User.findById(targetUserId);
+const unSaveUser = async (userId, id) => {
+  const targetUser = await User.findById(id);
   if (!targetUser) throw new Error('Target user not found');
 
-  const targetedUser = await User.findById(targettedUserId);
-  if (!targetedUser) throw new Error('Targeted user not found');
-
-  // Ensure blockedUsers is an array
-  if (!Array.isArray(targetedUser.savedUsers)) {
-    targetedUser.savedUsers = [];
+  if (!Array.isArray(targetUser.savedUsers)) {
+    targetUser.savedUsers = [];
   }
 
-  // Remove targetUserId from blockedUsers if present
-  const index = targetedUser.savedUsers.indexOf(targetUserId);
+  const index = targetUser.savedUsers.indexOf(userId);
   if (index !== -1) {
-    targetedUser.savedUsers.splice(index, 1);
-    await targetedUser.save();
+    targetUser.savedUsers.splice(index, 1);
+    await targetUser.save();
   }
 
-  return targetedUser.savedUsers;
+  return targetUser.savedUsers;
 };
+
 
 
 module.exports = {

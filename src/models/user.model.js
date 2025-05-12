@@ -142,15 +142,15 @@ const userSchema = mongoose.Schema(
     //   ],
     //   default: [],
     // },
-    // savedUsers: {
-    //   type: [
-    //     {
-    //       type: mongoose.Schema.Types.ObjectId,
-    //       ref: 'User',
-    //     },
-    //   ],
-    //   default: [],
-    // },
+    savedUsers: {
+      type: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'User',
+        },
+      ],
+      default: [],
+    },
     // matchedUsers: {
     //   type: [
     //     {
