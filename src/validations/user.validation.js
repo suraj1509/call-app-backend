@@ -22,7 +22,7 @@ const getUsers = {
 
 const getFeedUsers = {
   query: Joi.object().keys({
-    role: Joi.string(),
+    filter: Joi.string(),
   }),
 };
 
@@ -100,6 +100,23 @@ const updateMe = {
       reviewed: Joi.array(),
       blockedUsers: Joi.array(),
       reportedUsers: Joi.array(),
+      agePreference: Joi.array(),
+      card: Joi.object().keys({
+        cardHolderName: Joi.string().trim(),
+        cardNumber: Joi.string().trim(),
+        expiryDate: Joi.string().trim(),
+        cvv: Joi.string().trim(),
+        cardType: Joi.string().valid('Visa', 'MasterCard', 'American Express').default('Visa'),
+      }),
+      bankAccount: Joi.object().keys({
+        accountHolderName: Joi.string().trim(),
+        accountNumber: Joi.string().trim(),
+        ifscCode: Joi.string().trim(),
+      }),
+      upi: Joi.object().keys({
+        upiId: Joi.string().trim(),
+      }),
+      withdrawlRequest: Joi.array(),
     })
     .min(1),
 };

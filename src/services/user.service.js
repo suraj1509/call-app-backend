@@ -170,21 +170,51 @@ const deleteUserById = async (userId) => {
   return user;
 };
 
-const getFeedUsers = async (role) => {
+const getFeedUsers = async (filter, role, language = '', ageRange = []) => {
+  let users = [];
+
   try {
     if (role === 'User' || role === 'user') {
-      const employees = await User.find({ role: 'Employee' });
-      return employees;
+      users = await User.find({ role: 'Employee' });
     } else if (role === 'Employee' || role === 'employee') {
-      const users = await User.find({ role: 'User' });
-      return users;
-    } else {
-      throw new Error('Invalid role provided');
+      users = await User.find({ role: 'User' });
     }
+
+    if (filter === "Newest") {
+      users.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    } else if (filter === "Online Now") {
+      users.sort((a, b) => new Date(b.lastActive) - new Date(a.lastActive));
+    } else if (filter === "Top Rated") {
+      users.sort((a, b) => (b.overallRating || 0) - (a.overallRating || 0));
+    } else if (filter === "Language") {
+      console.log('Language:', language);
+      users = users.filter(user => user?.language?.toLowerCase() === language?.toLowerCase());
+    } else if (filter === "Age Range" && ageRange.length === 2) {
+      const [minAge, maxAge] = ageRange;
+
+      const calculateAge = (dob) => {
+        const birthDate = new Date(dob);
+        const today = new Date();
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+          age--;
+        }
+        return age;
+      };
+
+      users = users.filter(user => {
+        const age = user.dob ? calculateAge(user.dob) : null;
+        return age !== null && age >= minAge && age <= maxAge;
+      });
+    }
+ 
+    return users;
   } catch (error) {
     throw new Error('Failed to fetch users: ' + error.message);
   }
 };
+
 
 
 module.exports = {

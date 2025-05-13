@@ -20,7 +20,17 @@ const getUsers = catchAsync(async (req, res) => {
 });
 
 const getFeedUsers = catchAsync(async (req, res) => {
-  const result = await userService.getFeedUsers(req.query.role);
+  let ageRange ;
+  let language ; 
+  if(req?.query?.filter === "Age Range"){
+    const user = await User.findById(req.user.id).select('ageRange');
+    ageRange = user?.agePreference;
+  }
+  if(req?.query?.filter === "Language"){
+    const user =  await User.findById(req.user.id).select('language');
+    language = user?.language;
+  }
+  const result = await userService.getFeedUsers(req.query.filter, req.user.role, language, ageRange);
   res.send(result);
 });
 

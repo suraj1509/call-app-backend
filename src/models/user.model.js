@@ -253,6 +253,67 @@ const userSchema = mongoose.Schema(
       type : Number,
       default: 10,
     },
+    agePreference:{
+      type : [],
+      default: [18, 30],
+    },
+    card: {
+      cardHolderName: {
+        type: String,
+        trim: true,
+      },
+      cardNumber: {
+        type: String,
+        trim: true,
+      },
+      expiryDate: {
+        type: String,
+        trim: true,
+      },
+      cvv: {
+        type: String,
+        trim: true,
+      },
+      cardType: {
+        type: String,
+        enum: ['Visa', 'MasterCard', 'American Express'],
+        default: 'Visa',
+      },
+   
+    },
+    bankAccount: {
+      accountHolderName: {
+        type: String,
+        trim: true,
+      },
+      accountNumber: {
+        type: String,
+        trim: true,
+      },
+      ifscCode: {
+        type: String,
+        trim: true,
+      },
+    },
+    upi: {
+      upiId: {
+        type: String,
+        trim: true,
+      },
+    },
+    withdrawlRequest: [
+      {
+        status: {
+          type: String,
+          enum: ['Pending', 'Approved', 'Rejected'], // Optional but recommended
+          default: 'Pending',
+        },
+        createdAt: {
+          type: Date,
+          default: Date.now,
+        }
+      }
+    ],    
     // location: {
     //   type: {
     //     type: String,
