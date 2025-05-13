@@ -15,7 +15,7 @@ const createReview = async (targetUserId, newReview) => {
     } else {
       user.reviews.push(newReview);
     }
-  
+    await user?.notifications.push({name: newReview?.name, message: `You have received a new review from ${newReview?.name}`});
     await user.save();
 
     const reviewer = await User.findById(newReview?.id);

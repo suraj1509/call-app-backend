@@ -314,221 +314,24 @@ const userSchema = mongoose.Schema(
         }
       }
     ],    
-    // location: {
-    //   type: {
-    //     type: String,
-    //     enum: ['Point'], // GeoJSON type must be "Point"
-    //     // required: true,
-    //   },
-    //   coordinates: {
-    //     type: [Number], // Array of numbers: [longitude, latitude]
-    //     // required: true,
-    //   },
-    //   city: {
-    //     type: String,
-    //     trim: true,
-    //   },
-    //   country: {
-    //     type: String,
-    //     trim: true,
-    //   },
-    // },
-    // profileStatus: {
-    //   type: Array,
-    //   default: [],
-    // },
-    // permanentAddress: {
-    //   type: String,
-    //   trim: true,
-    // },
-    // currentAddress: {
-    //   type: String,
-    //   trim: true,
-    // },
-    // originalAddress: {
-    //   type: String,
-    //   trim: true,
-    // },
-    // preferences: {
-    //   genderPreference: {
-    //     type: Number,
-    //     default: 0,
-    //   },
-    //   lookingFor: {
-    //     type: Number,
-    //     default: 0,
-    //   },
-    //   ageRange: {
-    //     min: {
-    //       type: Number,
-    //       default: 18,
-    //     },
-    //     max: {
-    //       type: Number,
-    //       default: 60,
-    //     },
-    //   },
-    //   maxDistance: {
-    //     type: Number, // In kilometers
-    //     default: 50,
-    //   },
-      //   lookingFor: {
-      //     type: String,
-      //   },
-      // },
-      // orientation: {
-      //   type: String,
-      //   default: 'Straight',
-      // },
-      // likes: {
-      //   type: [mongoose.Schema.Types.ObjectId],
-      //   ref: 'User',
-      //   default: [],
-      // },
-      // matches: {
-      //   type: [mongoose.Schema.Types.ObjectId],
-      //   ref: 'User',
-      //   default: [],
-      // },
-      // blockList: {
-      //   type: [mongoose.Schema.Types.ObjectId],
-      //   ref: 'User',
-      //   default: [],
-      // },
-      // premiumStatus: {
-      //   isPremium: {
-      //     type: Boolean,
-      //     default: false,
-      //   },
-      //   subscriptionType: {
-      //     type: String,
-      //     enum: ['free', 'gold', 'platinum'],
-      //     default: 'free',
-      //   },
-      //   expiryDate: {
-      //     type: Date,
-      //   },
-    // },
+   
     lastActive: {
       type: Date,
       default: Date.now,
     },
-    // chatRooms: [
-    //   {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'ChatRoom',
-    //   },
-    // ],
-    // unreadCounts: {
-    //   type: Map,
-    //   of: Number,
-    //   default: {},
-    // },
-    // // isEmailVerified: {
-    //   type: Boolean,
-    //   default: false,
-    // },
-    // notifications: {
-    //   type: Array,
-    //   default: [
-    //     {
-    //       id: '1',
-    //       note: 'Zyan liked your profile',
-    //       image: 'https://randomuser.me/api/portraits/men/1.jpg',
-    //       name: 'Zyan',
-    //       lastSeen: '2 hours ago',
-    //       userId: 'user123',
-    //       messageSeen: false,
-    //       messageReceivedNotSeen: true,
-    //       noOfMessageReceivedNotSeen: Math.floor(Math.random() * 20) + 1,
-    //       messageSent: false, // Add messageSent field
-    //     },
-    //     {
-    //       id: '2',
-    //       note: 'You have a new message from Neha',
-    //       image: 'https://randomuser.me/api/portraits/women/2.jpg',
-    //       name: 'Neha',
-    //       lastSeen: '1 hour ago',
-    //       userId: 'user456',
-    //       messageSeen: true,
-    //       messageReceivedNotSeen: false,
-    //       noOfMessageReceivedNotSeen: Math.floor(Math.random() * 20) + 1,
-    //       messageSent: true, // Add messageSent field
-    //     },
-    //     {
-    //       id: '3',
-    //       note: 'We have new profiles around your location preference',
-    //       image: 'https://randomuser.me/api/portraits/men/3.jpg',
-    //       name: 'Alex',
-    //       lastSeen: '3 hours ago',
-    //       userId: 'user789',
-    //       messageSeen: false,
-    //       messageReceivedNotSeen: true,
-    //       noOfMessageReceivedNotSeen: Math.floor(Math.random() * 20) + 1,
-    //       messageSent: false, // Add messageSent field
-    //     },
-    //     {
-    //       id: '4',
-    //       note: 'Sneha favourited you',
-    //       image: 'https://randomuser.me/api/portraits/women/4.jpg',
-    //       name: 'Sneha',
-    //       lastSeen: '5 hours ago',
-    //       userId: 'user012',
-    //       messageSeen: true,
-    //       messageReceivedNotSeen: false,
-    //       noOfMessageReceivedNotSeen: Math.floor(Math.random() * 20) + 1,
-    //       messageSent: false, // Add messageSent field
-    //     },
-    //     {
-    //       id: '5',
-    //       note: 'Check our prime plan for getting faster matches',
-    //       image: 'https://randomuser.me/api/portraits/men/5.jpg',
-    //       name: 'Prime Plan',
-    //       lastSeen: 'just now',
-    //       userId: 'user999',
-    //       messageSeen: false,
-    //       messageReceivedNotSeen: true,
-    //       noOfMessageReceivedNotSeen: Math.floor(Math.random() * 20) + 1,
-    //       messageSent: true, // Add messageSent field
-    //     },
-    //     {
-    //       id: '6',
-    //       note: 'You have a match request from Ravi',
-    //       image: 'https://randomuser.me/api/portraits/men/6.jpg',
-    //       name: 'Ravi',
-    //       lastSeen: '30 minutes ago',
-    //       userId: 'user101',
-    //       messageSeen: false,
-    //       messageReceivedNotSeen: false,
-    //       noOfMessageReceivedNotSeen: Math.floor(Math.random() * 20) + 1,
-    //       messageSent: true, // Add messageSent field
-    //     },
-    //     {
-    //       id: '7',
-    //       note: 'Ankita viewed your profile',
-    //       image: 'https://randomuser.me/api/portraits/women/7.jpg',
-    //       name: 'Ankita',
-    //       lastSeen: '10 minutes ago',
-    //       userId: 'user102',
-    //       messageSeen: true,
-    //       messageReceivedNotSeen: false,
-    //       noOfMessageReceivedNotSeen: Math.floor(Math.random() * 20) + 1,
-    //       messageSent: false, // Add messageSent field
-    //     },
-    //     {
-    //       id: '8',
-    //       note: 'Raj sent you a message',
-    //       image: 'https://randomuser.me/api/portraits/men/8.jpg',
-    //       name: 'Raj',
-    //       lastSeen: '5 minutes ago',
-    //       userId: 'user103',
-    //       messageSeen: false,
-    //       messageReceivedNotSeen: true,
-    //       noOfMessageReceivedNotSeen: Math.floor(Math.random() * 20) + 1,
-    //       messageSent: false, // Add messageSent field
-    //     },
-    //   ],
-    // },
+   
+    notifications: {
+      type: [
+        {
+          message: { type: String, required: true },
+          time: { type: Date, default: Date.now },
+          name: { type: String }, 
+          status: { type: String, default: 'unread' }, // 'unread' or 'read'
+        }
+      ],
+      default: [],
+    },
+    
   },
   {
     timestamps: true,
@@ -575,6 +378,7 @@ userSchema.pre('save', async function (next) {
   }
   next();
 });
+
 
 /**
  * @typedef User
